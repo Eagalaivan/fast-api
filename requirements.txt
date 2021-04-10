@@ -3,6 +3,6 @@ pip install fastapi
 pip install uvicorn[standard]
 
 sqlite3 windows binaries[.dll,.df] 
--need to add environment system variable
+-need to add  system environment variable
 
 
