@@ -3,13 +3,12 @@ from sqlalchemy.orm import Session
 from .database import SessionLocal,engine
 from .models import *
 from pydantic import BaseModel
-#new brancj
+
 app=FastAPI()
 
 Base.metadata.create_all(bind=engine)
 class JobModel(BaseModel):
     id: int
-
 
 def get_db():
     try:
@@ -27,7 +26,7 @@ def show_jobs( db: Session = Depends(get_db)):
     result=res.fetchall()
     print(result)
     db.commit()
-    return {"query":result}
+    return {"query passed":result}
 
 @app.post("/jobs/{id}")
 def create_job(id:int):
