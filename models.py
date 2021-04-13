@@ -17,6 +17,7 @@ class Candidates(Base):
     c_name = Column(String)
     c_degree =Column(String)
     id = Column(Integer, ForeignKey("jobs.id"))
+    
 class Jobapplications(Base):
     __tablename__="jobapplication"
     job_application_id=Column(Integer,primary_key=True,index=True)
