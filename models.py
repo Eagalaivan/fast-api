@@ -3,8 +3,6 @@ from sqlalchemy.orm import relationship
 from .database import Base
 
 
-
-
 class Jobs(Base):
     __tablename__ = "jobs"
     id = Column(Integer, primary_key=True, index=True)
@@ -17,7 +15,10 @@ class Candidates(Base):
     c_name = Column(String)
     c_degree =Column(String)
     id = Column(Integer, ForeignKey("jobs.id"))
+    
 class Jobapplications(Base):
     __tablename__="jobapplication"
-    job_application_id=Column(Integer,primary_key=True,index=True)
-    j_id=Column(Integer,ForeignKey("candidates.c_id"))    
+    job_application_id = Column(Integer,primary_key=True,index=True,auto_increment=True)
+    j_id = Column(Integer,ForeignKey("candidates.c_id"))    
+    c_name = Column(String)
+    j_role = Column(String)
