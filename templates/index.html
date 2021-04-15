@@ -1,0 +1,50 @@
+{% extends "layouts.html" %}
+
+{% block content%}
+
+<a href="./jobs">jobs</a> <a href="./job/apply">apply for job</a>
+
+
+<h2> candidate apply </h2>
+<form method="get">
+
+  <div class="ui input">
+    <input type="number" id="c_id" placeholder="candidate id ">
+  </div>
+  <div class="ui input">
+    <input type="text" id="name" placeholder="name">
+  </div>
+  <div class="ui input">
+    <input type="text" id="degree" placeholder="degree">
+  </div>
+  <div class="ui input">
+    <input type="text" id="role" placeholder="Role applying">
+  </div>
+
+</form>
+<button id="submit" type="submit" name="submit" value="submit"> submit </button>
+
+<script type="text/javascript">
+
+  $("#submit").click(function () {
+
+    var person = {
+      c_id: $("#c_id").val(),
+      c_name: $("#name").val(),
+      c_degree: $("#degree").val(),
+      role_name: $("#role").val()
+    }
+
+    $.ajax({
+      url: '/job/apply/',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(person),
+      dataType: 'json'
+    });
+
+  });
+</script>
+
+
+{% endblock %}
