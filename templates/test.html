@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+
+    <form id="form" action="" method="post">
+        Name: <input type="text" name="name"><br>
+        Age: <input type="text" name="email"><br>
+        FavColor: <input type="text" name="favc"><br>
+        <input id="submit" type="button" name="submit" value="submit">
+    </form>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // click on button submit
+            $("#submit").on('click', function () {
+                // send ajax
+                $.ajax({
+                    url: 'test.html',
+                    type: "POST",
+                    dataType: 'json',
+                    data: $("#form").serialize(),
+                    success: function (result) {
+
+                        console.log(result);
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                    }
+                })
+            });
+        });
+
+    </script>
+</body>
+
+</html>
