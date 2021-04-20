@@ -40,7 +40,7 @@
   
   
 </form>
-<button id="submit" type="submit" name="submit" value="submit" > 
+<button id="submit" type="submit" name="submit" value="submit" onClick="window.location.reload();" > 
   submit
 </button>
 
@@ -54,10 +54,12 @@
 
 </form>
 
-<button id="delete" type="submit" name="delete"   > 
+<button id="delete" type="submit" name="delete"  onClick="window.location.reload();"  > 
     delete
     </button>
 <script type="text/javascript">
+  
+
 
   $("#submit").click(function () {
 
@@ -73,6 +75,9 @@
       data: JSON.stringify(person),
       dataType: 'json'
         });
+       
+        
+   
     });
 
     $("#delete").click(function () {
@@ -80,13 +85,16 @@
         var del =  $("#id1").val();
                 
         console.log(del);
+        
         $.ajax({
         url: '/jobs/'+del,
         type: 'DELETE',
         contentType: 'application/json',
         data: del,
         dataType: 'string'
-            });
+    });
+           
+    
         });
 </script>
    

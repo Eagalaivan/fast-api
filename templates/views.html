@@ -40,7 +40,7 @@
   </div>
   
 </form>
-<button id="submit" type="submit" name="submit" value="submit"> 
+<button id="submit" type="submit" name="submit" value="submit" > 
   submit
   </button>
 
@@ -54,15 +54,19 @@
       c_degree: $("#degree").val(),
       role_name: $("#role").val()
     }
-
+    
     $.ajax({
       url: '/job/'+jid+'/apply/',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(person),
       dataType: 'json'
+      
     });
-
+    setTimeout(function(){ RefreshPage(); }, 1000);
+    function RefreshPage(){
+    location.reload();
+    }
   });
  
 </script>
