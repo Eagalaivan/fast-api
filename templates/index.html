@@ -2,51 +2,49 @@
 
 {% block content%}
 
-<a href="./jobs">jobs</a> <a href="./job/apply">apply for job</a>
+  <a href="./jobs">jobs</a> 
+
+<br>
+
+<h2>  Search   job  by  id</h2>
+<form method="get" action="/job/">
+
+  <div class="ui input">
+    <input type="test" id="id1" placeholder="job id ">
+  </div>
 
 
-<h2> candidate apply </h2>
-<form method="get" action="/job/apply/">
-
-  <div class="ui input">
-    <input type="number" id="c_id" placeholder="candidate id ">
-  </div>
-  <div class="ui input">
-    <input type="text" id="name" placeholder="name">
-  </div>
-  <div class="ui input">
-    <input type="text" id="degree" placeholder="degree">
-  </div>
-  <div class="ui input">
-    <input type="text" id="role" placeholder="Role applying">
-  </div>
-  
 </form>
-<button id="submit" type="submit" name="submit" value="submit"> 
+<br>
+<button id="submit" type="submit"   > 
   submit
   </button>
-
 <script type="text/javascript">
 
-  $("#submit").click(function () {
+ 
 
-    var person = {
-      c_id: $("#c_id").val(),
-      c_name: $("#name").val(),
-      c_degree: $("#degree").val(),
-      role_name: $("#role").val()
-    }
+    $("#submit").click(function () {
 
-    $.ajax({
-      url: '/job/apply/',
-      type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify(person),
-      dataType: 'json'
-    });
-
-  });
+        var search =  $("#id1").val();
+        window.open('/job/'+search)
+        console.log(search);
+  
+        // $.ajax({
+        // url: '/job/'+search,
+        // type: 'GET',
+        // contentType: 'application/json',
+        // data: '/job/'+search,
+     
+        // success: function(data){
+        //     var win = window.open(data);
+        //     // win.document.write(data);
+        // }
+        //     });
+         });
 </script>
+
+
+
 
 
 {% endblock %}

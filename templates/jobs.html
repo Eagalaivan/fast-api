@@ -28,7 +28,7 @@
 <form method="get" action="/jobs/">
 
   <div class="ui input">
-    <input type="number" id="id" placeholder="job id ">
+    <input type="text" id="id" placeholder="job id ">
   </div>
   <div class="ui input">
     <input type="text" id="job_description" placeholder="JD ">
@@ -40,7 +40,7 @@
   
   
 </form>
-<button id="submit" type="submit" name="submit" value="submit" onClick="window.location.reload();"> 
+<button id="submit" type="submit" name="submit" value="submit" > 
   submit
 </button>
 
@@ -54,7 +54,7 @@
 
 </form>
 
-<button id="delete" type="submit" name="delete" > 
+<button id="delete" type="submit" name="delete"   > 
     delete
     </button>
 <script type="text/javascript">
@@ -62,7 +62,7 @@
   $("#submit").click(function () {
 
     var person = {
-        id: $("#id1").val(),
+        id: $("#id").val(),
         job_description: $("#job_description").val(),
         is_active: $("#is_active").val(),
          }
