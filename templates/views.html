@@ -1,0 +1,70 @@
+{% extends "layouts.html" %}
+
+    {%block content%}
+    <table class="ui celled table"> 
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>JD</th>
+            <th>is_active</th>
+        </tr>
+
+        </thead>
+   
+    <tbody>
+        {% for result in result %}
+        <tr>
+            {% for elem in result %}
+           
+                <td id="job"> {{elem}}</td>
+          
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    <h2> candidate apply </h2>
+<form name = "form" method="get" >
+    <div class="ui input">
+        <input type="text" id="jid" placeholder="jid" >
+      </div>
+  
+  <div class="ui input">
+    <input type="text" id="name" placeholder="name">
+  </div>
+  <div class="ui input">
+    <input type="text" id="degree" placeholder="degree">
+  </div>
+  <div class="ui input">
+    <input type="text" id="role" placeholder="Role applying">
+  </div>
+  
+</form>
+<button id="submit" type="submit" name="submit" value="submit"> 
+  submit
+  </button>
+
+<script type="text/javascript">
+
+  $("#submit").click(function () {
+    var jid = $("#jid").val();
+    console.log(jid);
+    var person = {      
+      c_name: $("#name").val(),
+      c_degree: $("#degree").val(),
+      role_name: $("#role").val()
+    }
+
+    $.ajax({
+      url: '/job/'+jid+'/apply/',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(person),
+      dataType: 'json'
+    });
+
+  });
+ 
+</script>
+
+    {%endblock%}

@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, Request, BackgroundTasks
+from fastapi import Depends, FastAPI, Request, BackgroundTasks, HTTPException
 from sqlalchemy.orm import Session
 from .database import SessionLocal, engine
 from .models import *
@@ -17,9 +17,11 @@ class JobModel(BaseModel):
     job_description: str
     is_active: bool
 
+class delete_id():
+    id:str
 
 class CandidateModel(BaseModel):
-    c_id: str
+   
     c_name: str
     c_degree: str
     role_name: str
@@ -40,7 +42,6 @@ templates = Jinja2Templates(directory="fast-api/templates")
 def index(request: Request):
     return templates.TemplateResponse("index.html", {
         "request": request
-
     })
 
 
@@ -49,54 +50,78 @@ def show_jobs(request: Request, db: Session = Depends(get_db)):
     res = db.execute("SELECT * FROM jobs")
     result = res.fetchall()
     db.commit()
-    return {"json": result}
-    # return templates.TemplateResponse("jobs.html",{"request":request})
+   
+    return templates.TemplateResponse("jobs.html", context={
+        "request": request,
+        "res":result,
+        "var":2
+
+    })
 
 
 @app.post("/jobs/")
-def create_job(val: JobModel, db: Session = Depends(get_db)):
+def create_job(request:Request ,val: JobModel, db: Session = Depends(get_db)):
     id = val.id
+    print(id)
     job_description = val.job_description
     is_active = val.is_active
     db.execute("INSERT INTO jobs (id,job_description,is_active) values ({},'{}',{})".format(
         id, job_description, is_active))
     db.commit()
-    return {"query passed": "added"}
+    return templates.TemplateResponse("jobs.html", context={
+        "request": request     
+
+    })
 
 
-@app.delete("/jobs/")
-def delete_job(id: str, db: Session = Depends(get_db)):
+
+@app.delete("/jobs/{id}")
+def delete_job(request:Request, id: str, db: Session = Depends(get_db)):
     del_id = id
-    res = db.execute("DELETE FROM jobs WHERE id={}".format(del_id))
+    db.execute("DELETE FROM jobs WHERE id={}".format(del_id))
     db.commit()
-    return {"query passed": "removed"}
+    return templates.TemplateResponse("jobs.html", context={
+        "request": request     
+
+    })
 
 
 @app.get("/job/{id}")
-def get_job_byid(id: str, db: Session = Depends(get_db)):
+def get_job_byid(request:Request,id: int, db: Session = Depends(get_db)):
     search_id = id
+ 
     res = db.execute(
-        "SELECT job_description FROM jobs WHERE id = {}".format(search_id))
+        "SELECT * FROM jobs WHERE id = {}".format(search_id))
     result = res.fetchall()
     db.commit()
-    return {"query passed": result}
+    
+    return templates.TemplateResponse("views.html", context={
+        "request": request,
+        "result":result,
+        
+
+    })
 
 
-@app.post("/job/apply/")
-def apply_job_by_id(candidatesvalidation: CandidateModel, db: Session = Depends(get_db)):
-
+@app.post("/job/{jid}/apply")
+def apply_job_by_id(jid:str,request: Request,candidatesvalidation: CandidateModel, db: Session = Depends(get_db)):
     candidatesvalidation.role_name = candidatesvalidation.role_name
     candidatesvalidation.c_name = candidatesvalidation.c_name
-    candidatesvalidation.c_id = candidatesvalidation.c_id
     candidatesvalidation.c_degree = candidatesvalidation.c_degree
     application_id = random.randint(100, 657)
     res = db.execute("INSERT INTO jobapplication (job_application_id,j_id,c_name,j_role) values ({},{},'{}','{}')".format(
-        application_id, candidatesvalidation.c_id, candidatesvalidation.c_name, candidatesvalidation.role_name))
+        application_id, jid, candidatesvalidation.c_name, candidatesvalidation.role_name))
+        
     db.commit()
-    return {"query": "inserted"}
+    res2= db.execute("SELECT * FROM jobapplication")
+    result2 =res2.fetchall()
+    db.commit()
+
+    return templates.TemplateResponse("views.html", context={
+        "request": request,
+        "res":result2
+        
+
+    })
 
 
-@app.get("/ja")
-def checl(id: str, s1: str, s2: str, s3: str, s4: str):
-
-    return {id, s1, s2, s3, s4}
