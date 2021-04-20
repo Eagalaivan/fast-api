@@ -6,9 +6,9 @@ from pydantic import BaseModel
 import random
 from uuid import UUID
 from fastapi.templating import Jinja2Templates
-
+from fastapi.staticfiles import StaticFiles
 app = FastAPI()
-
+app.mount("/assets", StaticFiles(directory="fast-api/templates"), name="assets")
 Base.metadata.create_all(bind=engine)
 
 
@@ -37,7 +37,11 @@ def get_db():
 
 templates = Jinja2Templates(directory="fast-api/templates")
 
-
+@app.get("/home")
+def home(request:Request):
+    return templates.TemplateResponse("homepage.html", {
+        "request": request
+    })
 @app.get("/")
 def index(request: Request):
     return templates.TemplateResponse("index.html", {
