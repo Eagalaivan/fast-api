@@ -39,12 +39,13 @@ templates = Jinja2Templates(directory="fast-api/templates")
 
 @app.get("/home")
 def home(request:Request):
-    return templates.TemplateResponse("homepage.html", {
+   
+    return templates.TemplateResponse("index.html", {
         "request": request
     })
 @app.get("/")
 def index(request: Request):
-    return templates.TemplateResponse("index.html", {
+     return templates.TemplateResponse("homepage.html", {
         "request": request
     })
 
