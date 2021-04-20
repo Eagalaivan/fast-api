@@ -1,0 +1,101 @@
+
+    {% extends "layouts.html" %}
+
+    {%block content%}
+    <table class="ui celled table"> 
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>JD</th>
+            <th>is_active</th>
+        </tr>
+
+        </thead>
+   
+    <tbody>
+    {% for result in res %}
+    <tr>
+        {% for elem in result %}
+       
+            <td>{{elem}}</td>
+      
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+    <h2>  add  job </h2>
+<form method="get" action="/jobs/">
+
+  <div class="ui input">
+    <input type="text" id="id" placeholder="job id ">
+  </div>
+  <div class="ui input">
+    <input type="text" id="job_description" placeholder="JD ">
+  </div>
+
+  <div class="ui input">
+    <input type="text" id="is_active" placeholder="active" value="true">
+  </div>
+  
+  
+</form>
+<button id="submit" type="submit" name="submit" value="submit" onClick="window.location.reload();" > 
+  submit
+</button>
+
+<h2>  delete  job </h2>
+<form method="get" action="/jobs/">
+
+  <div class="ui input">
+    <input type="test" id="id1" placeholder="job id ">
+  </div>
+
+
+</form>
+
+<button id="delete" type="submit" name="delete"  onClick="window.location.reload();"  > 
+    delete
+    </button>
+<script type="text/javascript">
+  
+
+
+  $("#submit").click(function () {
+
+    var person = {
+        id: $("#id").val(),
+        job_description: $("#job_description").val(),
+        is_active: $("#is_active").val(),
+         }
+    $.ajax({
+      url: '/jobs/',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(person),
+      dataType: 'json'
+        });
+       
+        
+   
+    });
+
+    $("#delete").click(function () {
+
+        var del =  $("#id1").val();
+                
+        console.log(del);
+        
+        $.ajax({
+        url: '/jobs/'+del,
+        type: 'DELETE',
+        contentType: 'application/json',
+        data: del,
+        dataType: 'string'
+    });
+           
+    
+        });
+</script>
+   
+    {% endblock%}

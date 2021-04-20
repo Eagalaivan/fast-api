@@ -1,0 +1,50 @@
+{% extends "layouts.html" %}
+
+{% block content%}
+
+  <pre>  <a href="./jobs">jobs</a>  view available jobs   </pre>
+
+<br>
+
+<h2>  Search   job  by  id</h2>
+<form method="get" action="/job/">
+
+  <div class="ui input">
+    <input type="test" id="id1" placeholder="job id ">
+  </div>
+
+
+</form>
+<br>
+<button id="submit" type="submit"   > 
+  submit
+  </button>
+<script type="text/javascript">
+
+ 
+
+    $("#submit").click(function () {
+
+        var search =  $("#id1").val();
+        window.open('/job/'+search)
+        console.log(search);
+  
+        // $.ajax({
+        // url: '/job/'+search,
+        // type: 'GET',
+        // contentType: 'application/json',
+        // data: '/job/'+search,
+     
+        // success: function(data){
+        //     var win = window.open(data);
+        //     // win.document.write(data);
+        // }
+        //     });
+         });
+</script>
+
+
+
+
+
+{% endblock %}
