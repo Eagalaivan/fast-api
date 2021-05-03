@@ -8,6 +8,7 @@ from uuid import UUID
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 app = FastAPI()
+
 app.mount("/assets", StaticFiles(directory="fast-api/templates"), name="assets")
 Base.metadata.create_all(bind=engine)
 
